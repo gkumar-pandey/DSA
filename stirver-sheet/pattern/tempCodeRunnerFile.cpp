@@ -1,0 +1,2 @@
+ printStarPattern(n);
+    printInvertedStarPyramid(n);
