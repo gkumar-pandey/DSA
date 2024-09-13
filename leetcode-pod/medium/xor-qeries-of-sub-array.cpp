@@ -8,17 +8,37 @@ using namespace std;
 // Brute Force => O(n^2)
 vector<int> xorQueries(vector<int>& arr, vector<vector<int>>& queries) {
     
+    // vector<int> ans;
+    // for(int i=0; i<queries.size(); i++){
+    //     int xorValue = 0;
+    //     int left = queries[i][0];
+    //     int right = queries[i][1];
+    //     for(int j=left; j<=right; j++){
+    //         xorValue = xorValue ^ arr[j];
+    //     }
+
+    //     ans.push_back(xorValue);
+    // }
+
+    //! Optimized Solution
     vector<int> ans;
+    vector<int> xorPreffixArr;
+
+    xorPreffixArr.push_back(arr[0]);
+
+
+    for(int i=1; i<arr.size(); i++){
+        xorPreffixArr.push_back(arr[i]^xorPreffixArr[i-1]);
+    }
 
     for(int i=0; i<queries.size(); i++){
-        int xorValue = 0;
         int left = queries[i][0];
         int right = queries[i][1];
-        for(int j=left; j<=right; j++){
-            xorValue = xorValue ^ arr[j];
+        if(left ==0){
+            ans.push_back(xorPreffixArr[right]);
+        }else{
+            ans.push_back(xorPreffixArr[right]^ xorPreffixArr[left-1]);
         }
-
-        ans.push_back(xorValue);
     }
 
     return ans;
